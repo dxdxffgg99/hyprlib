@@ -3,7 +3,6 @@ project(hyperlib C)
 
 add_library(hyperlib SHARED
         src/algorithm/sort.c
-        src/math/math.c
 )
 
 target_include_directories(hyperlib PUBLIC
