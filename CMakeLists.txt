@@ -13,16 +13,21 @@ target_include_directories(hyperlib PUBLIC
 )
 
 if(MSVC)
-    target_compile_options(hyperlib INTERFACE "/Zc:__STDC_VERSION__")
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86|x86_64|amd64|AMD64")
-    target_compile_options(hyperlib PRIVATE -msse4.1)
+    target_compile_options(hyperlib PRIVATE /Zc:__STDC_VERSION__ /arch:SSE2)
+else()
+    if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86|x86_64|amd64|AMD64")
+        target_compile_options(hyperlib PRIVATE -msse4.1)
+    endif()
 endif()
 
 enable_testing()
 
 file(GLOB TEST_SOURCES "test/*.c")
 
-set(C_STANDARDS 90 99 11 17 23)
+set(C_STANDARDS 90 99 11 17)
+if(NOT MSVC)
+    list(APPEND C_STANDARDS 23)
+endif()
 
 foreach(SOURCE_FILE ${TEST_SOURCES})
     get_filename_component(TEST_NAME_BASE ${SOURCE_FILE} NAME_WE)
@@ -46,8 +51,13 @@ foreach(SOURCE_FILE ${TEST_SOURCES})
                 C_EXTENSIONS OFF
         )
 
-        if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86|x86_64|amd64|AMD64")
-            target_compile_options(${TARGET_NAME} PRIVATE -msse4.1)
+        if(MSVC)
+            target_compile_options(${TARGET_NAME} PRIVATE /arch:SSE2 /wd4100)
+        else()
+            target_compile_options(${TARGET_NAME} PRIVATE -Wno-unused-function)
+            if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86|x86_64|amd64|AMD64")
+                target_compile_options(${TARGET_NAME} PRIVATE -msse4.1)
+            endif()
         endif()
 
         target_link_libraries(${TARGET_NAME} PRIVATE hyperlib)

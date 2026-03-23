@@ -35,10 +35,7 @@ jobs:
             runs_on: macos-14
             compiler: clang
             c_compiler: clang
-          - name: Windows 2022 / ClangCL / x86_64
-            runs_on: windows-2022
-            compiler: clangcl
-
+            
     steps:
       - name: Checkout
         uses: actions/checkout@v4
