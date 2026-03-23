@@ -1,8 +1,8 @@
 #ifndef HYPER_LIBRARY_CORE_H
 #define HYPER_LIBRARY_CORE_H
 
-#include "./src/algorithm/algo.h"
-#include "./src/platform/platform.h"
+#include "./src/algorithm/hypralgo.h"
+#include "./src/platform/hyprplatform.h"
 #include "./src/math/math.h"
 
 #define swap(x, y) do { \

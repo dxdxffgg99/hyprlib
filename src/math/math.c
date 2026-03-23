@@ -1,4 +1,4 @@
-#include "../platform/platform.h"
+#include "../platform/hyprplatform.h"
 #include <math.h>
 
 #if (CPU_ARCH_I386) || (CPU_ARCH_X86_64)

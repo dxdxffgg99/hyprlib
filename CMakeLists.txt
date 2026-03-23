@@ -31,13 +31,13 @@ foreach(SOURCE_FILE ${TEST_SOURCES})
 
         add_executable(${TARGET_NAME} ${SOURCE_FILE}
                 test/test.c
-                src/alias/alias.h
+                src/alias/hypralias.h
                 src/platform/compiler.h
                 src/platform/cpu.h
                 src/platform/os.h
                 src/platform/cstdver.h
                 src/platform/types.h
-                src/platform/platform.h)
+                src/platform/hyprplatform.h)
 
         set_target_properties(${TARGET_NAME} PROPERTIES
                 C_STANDARD ${STD}
