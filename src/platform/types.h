@@ -16,8 +16,10 @@
     #error "[ERROR | hyprlib] int must be 4-byte"
 #endif
 
-#if (LLONG_MAX != 9223372036854775807LL)
-    #error "[ERROR | hyprlib] long long must be 8-byte"
+#if defined(LLONG_MAX)
+    #if (LLONG_MAX != 9223372036854775807LL)
+        #error "[ERROR | hyprlib] long long must be 8-byte"
+    #endif
 #endif
 
 #endif

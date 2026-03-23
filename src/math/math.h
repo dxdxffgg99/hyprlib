@@ -1,6 +1,8 @@
 #ifndef HYPERLIB_MATH_H
 #define HYPERLIB_MATH_H
 
+#include "../platform/hyprplatform.h"
+
 /**
  * @brief Computes the fast inverse square root (1/√x).
  * @param number The input floating-point value.
