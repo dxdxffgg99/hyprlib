@@ -1,0 +1,160 @@
+name: C CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.runs_on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Ubuntu 24.04 / GCC / x86_64
+            runs_on: ubuntu-24.04
+            compiler: gcc
+            c_compiler: gcc
+          - name: Ubuntu 24.04 / Clang / x86_64
+            runs_on: ubuntu-24.04
+            compiler: clang
+            c_compiler: clang
+          - name: Ubuntu 24.04 ARM / GCC / aarch64
+            runs_on: ubuntu-24.04-arm
+            compiler: gcc
+            c_compiler: gcc
+          - name: Ubuntu 24.04 ARM / Clang / aarch64
+            runs_on: ubuntu-24.04-arm
+            compiler: clang
+            c_compiler: clang
+          - name: macOS 13 / Clang / x86_64
+            runs_on: macos-13
+            compiler: clang
+            c_compiler: clang
+          - name: macOS 14 / Clang / aarch64
+            runs_on: macos-14
+            compiler: clang
+            c_compiler: clang
+          - name: Windows 2022 / ClangCL / x86_64
+            runs_on: windows-2022
+            compiler: clangcl
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: >-
+          cmake -S . -B build
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+
+      - name: Configure (Windows)
+        if: runner.os == 'Windows'
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -T ClangCL
+
+      - name: Build (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: cmake --build build --parallel
+
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        run: cmake --build build --config Release --parallel
+
+      - name: Test (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Test (Windows)
+        if: runner.os == 'Windows'
+        run: ctest --test-dir build --build-config Release --output-on-failure
+
+  freebsd-build-and-test:
+    name: FreeBSD / clang / x86_64
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build and test on FreeBSD VM
+        uses: vmactions/freebsd-vm@v1
+        with:
+          usesh: true
+          prepare: pkg install -y cmake
+          run: |
+            cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=cc
+            cmake --build build --parallel
+            ctest --test-dir build --output-on-failure
+
+  netbsd-build-and-test:
+    name: NetBSD / clang / x86_64
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build and test on NetBSD VM
+        uses: vmactions/netbsd-vm@v1
+        with:
+          usesh: true
+          prepare: pkgin -y install cmake
+          run: |
+            cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=cc
+            cmake --build build --parallel
+            ctest --test-dir build --output-on-failure
+
+  openbsd-build-and-test:
+    name: OpenBSD / clang / x86_64
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build and test on OpenBSD VM
+        uses: vmactions/openbsd-vm@v1
+        with:
+          usesh: true
+          prepare: pkg_add cmake
+          run: |
+            cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=cc
+            cmake --build build --parallel
+            ctest --test-dir build --output-on-failure
+
+  cross-arch-compile-check:
+    name: Cross-arch compile checks
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install cross toolchains
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            gcc-multilib \
+            gcc-aarch64-linux-gnu \
+            gcc-arm-linux-gnueabihf \
+            gcc-powerpc64-linux-gnu \
+            gcc-avr \
+            avr-libc
+
+      - name: Build architecture smoke translation unit
+        run: |
+          cat > arch_smoke.c << 'EOF'
+          #include "core.h"
+
+          int main(void) {
+              return 0;
+          }
+          EOF
+
+          gcc -m32 -std=c11 -Wall -Wextra -Werror -I. -c arch_smoke.c -o arch_i386.o
+          aarch64-linux-gnu-gcc -std=c11 -Wall -Wextra -Werror -I. -c arch_smoke.c -o arch_aarch64.o
+          arm-linux-gnueabihf-gcc -std=c11 -Wall -Wextra -Werror -I. -c arch_smoke.c -o arch_arm.o
+          powerpc64-linux-gnu-gcc -std=c11 -Wall -Wextra -Werror -I. -c arch_smoke.c -o arch_ppc64.o
+          avr-gcc -std=c11 -Wall -Wextra -Werror -I. -c arch_smoke.c -o arch_avr.o
