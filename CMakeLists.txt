@@ -5,6 +5,8 @@ add_library(hyperlib SHARED
         src/algorithm/sort.c
 )
 
+set_target_properties(hyperlib PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 target_include_directories(hyperlib PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/platform>
