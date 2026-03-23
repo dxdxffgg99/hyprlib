@@ -14,6 +14,8 @@ target_include_directories(hyperlib PUBLIC
 
 if(MSVC)
     target_compile_options(hyperlib INTERFACE "/Zc:__STDC_VERSION__")
+else()
+    target_compile_options(hyperlib PRIVATE -msse4.1)
 endif()
 
 enable_testing()
@@ -43,6 +45,10 @@ foreach(SOURCE_FILE ${TEST_SOURCES})
                 C_STANDARD_REQUIRED ON
                 C_EXTENSIONS OFF
         )
+
+        if(NOT MSVC)
+            target_compile_options(${TARGET_NAME} PRIVATE -msse4.1)
+        endif()
 
         target_link_libraries(${TARGET_NAME} PRIVATE hyperlib)
 
