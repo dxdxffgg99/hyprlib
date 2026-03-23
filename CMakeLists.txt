@@ -14,7 +14,7 @@ target_include_directories(hyperlib PUBLIC
 
 if(MSVC)
     target_compile_options(hyperlib INTERFACE "/Zc:__STDC_VERSION__")
-else()
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86|x86_64|amd64|AMD64")
     target_compile_options(hyperlib PRIVATE -msse4.1)
 endif()
 
@@ -46,7 +46,7 @@ foreach(SOURCE_FILE ${TEST_SOURCES})
                 C_EXTENSIONS OFF
         )
 
-        if(NOT MSVC)
+        if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86|x86_64|amd64|AMD64")
             target_compile_options(${TARGET_NAME} PRIVATE -msse4.1)
         endif()
 
