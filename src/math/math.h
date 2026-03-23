@@ -2,6 +2,7 @@
 #define HYPERLIB_MATH_H
 
 #include "../platform/hyprplatform.h"
+#include <math.h>
 
 /**
  * @brief Computes the fast inverse square root (1/√x).
@@ -9,7 +10,6 @@
  * @return The approximated inverse square root.
  */
 static hypr_inline float Fast_Inverse_sqrt(float number);
-
 /**
  * @brief Computes the fast square root (√x).
  * @param number The input floating-point value.
@@ -76,5 +76,4 @@ static hypr_inline float Fast_inv(float f);
  * @return The approximated sine of x.
  */
 static hypr_inline float Fast_sin(float x);
-
 #endif
