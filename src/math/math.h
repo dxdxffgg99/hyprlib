@@ -19,7 +19,7 @@
  * @param number The input floating-point value.
  * @return The approximated inverse square root.
  */
-static hypr_inline float __attribute__((unused)) Fast_Inverse_sqrt(float number) {
+static hypr_inline float HYPR_UNUSED Fast_Inverse_sqrt(float number) {
 #if (CPU_ARCH_I386) || (CPU_ARCH_X86_64)
     float out;
     _mm_store_ss(&out, _mm_rsqrt_ss(_mm_set_ss(number)));
@@ -44,7 +44,7 @@ static hypr_inline float __attribute__((unused)) Fast_Inverse_sqrt(float number)
  * @param number The input floating-point value.
  * @return The approximated square root.
  */
-static hypr_inline float __attribute__((unused)) Fast_sqrt(float number) {
+static hypr_inline float HYPR_UNUSED Fast_sqrt(float number) {
 #if (CPU_ARCH_I386) || (CPU_ARCH_X86_64)
     float out;
     _mm_store_ss(&out, _mm_sqrt_ss(_mm_set_ss(number)));
@@ -65,7 +65,7 @@ static hypr_inline float __attribute__((unused)) Fast_sqrt(float number) {
  * @param f The input value.
  * @return The absolute value of f.
  */
-static hypr_inline float __attribute__((unused)) Fast_abs(float f) {
+static hypr_inline float HYPR_UNUSED Fast_abs(float f) {
     union { float f; unsigned int i; } conv;
     conv.f = f;
     conv.i &= 0x7fffffff;
@@ -78,7 +78,7 @@ static hypr_inline float __attribute__((unused)) Fast_abs(float f) {
  * @param a Pointer to the first operand vector (float[4]).
  * @param b Pointer to the second operand vector (float[4]).
  */
-static hypr_inline void __attribute__((unused)) Vec4_Add(float* out, const float* a, const float* b) {
+static hypr_inline void HYPR_UNUSED Vec4_Add(float* out, const float* a, const float* b) {
 #if (CPU_ARCH_I386) || (CPU_ARCH_X86_64)
     _mm_storeu_ps(out, _mm_add_ps(_mm_loadu_ps(a), _mm_loadu_ps(b)));
 #elif (CPU_ARCH_AARCH64) || (CPU_ARCH_ARM64)
@@ -94,7 +94,7 @@ static hypr_inline void __attribute__((unused)) Vec4_Add(float* out, const float
  * @param b Pointer to the second vector (float[4]).
  * @return The computed dot product.
  */
-static hypr_inline float __attribute__((unused)) Vec4_Dot(const float* a, const float* b) {
+static hypr_inline float HYPR_UNUSED Vec4_Dot(const float* a, const float* b) {
 #if (CPU_ARCH_I386) || (CPU_ARCH_X86_64)
     __m128 res = _mm_dp_ps(_mm_loadu_ps(a), _mm_loadu_ps(b), 0xF1);
     return _mm_cvtss_f32(res);
@@ -111,7 +111,7 @@ static hypr_inline float __attribute__((unused)) Vec4_Dot(const float* a, const 
  * @param b The second value to compare.
  * @return The maximum of a and b.
  */
-static hypr_inline float __attribute__((unused)) Fast_max(float a, float b) {
+static hypr_inline float HYPR_UNUSED Fast_max(float a, float b) {
     return a > b ? a : b;
 }
 
@@ -121,7 +121,7 @@ static hypr_inline float __attribute__((unused)) Fast_max(float a, float b) {
  * @param b The second value to compare.
  * @return The minimum of a and b.
  */
-static hypr_inline float __attribute__((unused)) Fast_min(float a, float b) {
+static hypr_inline float HYPR_UNUSED Fast_min(float a, float b) {
     return a < b ? a : b;
 }
 
@@ -130,7 +130,7 @@ static hypr_inline float __attribute__((unused)) Fast_min(float a, float b) {
  * @param f The input value.
  * @return 1.0 if positive, -1.0 if negative, or 0.0 if zero.
  */
-static hypr_inline float __attribute__((unused)) Fast_sign(float f) {
+static hypr_inline float HYPR_UNUSED Fast_sign(float f) {
     union { float f; unsigned int i; } conv;
     conv.f = f;
     conv.i = (conv.i & 0x80000000) | 0x3f800000;
@@ -142,7 +142,7 @@ static hypr_inline float __attribute__((unused)) Fast_sign(float f) {
  * @param f The input value.
  * @return The computed inverse.
  */
-static hypr_inline float __attribute__((unused)) Fast_inv(float f) {
+static hypr_inline float HYPR_UNUSED Fast_inv(float f) {
     union { float f; int i; } conv;
     conv.f = f;
     conv.i = 0x7ee43535 - conv.i;
@@ -154,7 +154,7 @@ static hypr_inline float __attribute__((unused)) Fast_inv(float f) {
  * @param x The input angle in radians.
  * @return The approximated sine of x.
  */
-static hypr_inline float __attribute__((unused)) Fast_sin(float x) {
+static hypr_inline float HYPR_UNUSED Fast_sin(float x) {
     const float B = 1.27323954f;
     const float C = -0.40528473f;
     float y = B * x + C * x * (x < 0 ? -x : x);

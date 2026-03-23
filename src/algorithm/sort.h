@@ -1,13 +1,15 @@
 #ifndef HYPERLIB_SORT_H
 #define HYPERLIB_SORT_H
 
+#include "../platform/hyprplatform.h"
+
 /**
  * This global function sorts n elements at the end of int *arr using heap sort.
  * @brief H_sort
  * @param int_ptr arr
  * @param u_int n
 */
-static inline void __attribute__((unused)) Heap_sort(int *arr, unsigned int n);
+static inline void HYPR_UNUSED Heap_sort(int *arr, unsigned int n);
 
 /**
  * @brief Quick Sort
@@ -16,7 +18,7 @@ static inline void __attribute__((unused)) Heap_sort(int *arr, unsigned int n);
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void __attribute__((unused)) Quick_sort(int *arr, unsigned int n);
+static inline void HYPR_UNUSED Quick_sort(int *arr, unsigned int n);
 
 /**
  * @brief Merge Sort
@@ -25,7 +27,7 @@ static inline void __attribute__((unused)) Quick_sort(int *arr, unsigned int n);
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void __attribute__((unused)) Merge_sort(int *arr, unsigned int n);
+static inline void HYPR_UNUSED Merge_sort(int *arr, unsigned int n);
 
 /**
  * @brief Insertion Sort
@@ -34,7 +36,7 @@ static inline void __attribute__((unused)) Merge_sort(int *arr, unsigned int n);
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void __attribute__((unused)) Insertion_sort(int *arr, unsigned int n);
+static inline void HYPR_UNUSED Insertion_sort(int *arr, unsigned int n);
 
 /**
  * @brief Bubble Sort
@@ -43,7 +45,7 @@ static inline void __attribute__((unused)) Insertion_sort(int *arr, unsigned int
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void __attribute__((unused)) Bubble_sort(int *arr, unsigned int n);
+static inline void HYPR_UNUSED Bubble_sort(int *arr, unsigned int n);
 
 /**
  * @brief Selection Sort
@@ -53,7 +55,7 @@ static inline void __attribute__((unused)) Bubble_sort(int *arr, unsigned int n)
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void __attribute__((unused)) Selection_sort(int *arr, unsigned int n);
+static inline void HYPR_UNUSED Selection_sort(int *arr, unsigned int n);
 
 /**
  * @brief Shell Sort
@@ -62,7 +64,7 @@ static inline void __attribute__((unused)) Selection_sort(int *arr, unsigned int
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void __attribute__((unused)) Shell_sort(int *arr, unsigned int n);
+static inline void HYPR_UNUSED Shell_sort(int *arr, unsigned int n);
 
 /**
  * @brief Counting Sort
@@ -72,7 +74,7 @@ static inline void __attribute__((unused)) Shell_sort(int *arr, unsigned int n);
  * @param n Number of elements
  * @param max_val The maximum value present in the array
  */
-static inline void __attribute__((unused)) Counting_sort(int *arr, unsigned int n, int max_val);
+static inline void HYPR_UNUSED Counting_sort(int *arr, unsigned int n, int max_val);
 
 /**
  * @brief Radix Sort
@@ -81,5 +83,5 @@ static inline void __attribute__((unused)) Counting_sort(int *arr, unsigned int 
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void __attribute__((unused)) Radix_sort(int *arr, unsigned int n);
+static inline void HYPR_UNUSED Radix_sort(int *arr, unsigned int n);
 #endif
