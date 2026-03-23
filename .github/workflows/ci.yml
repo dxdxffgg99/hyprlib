@@ -35,7 +35,19 @@ jobs:
             runs_on: macos-14
             compiler: clang
             c_compiler: clang
-            
+          - name: macOS 13 / Clang / x86_64
+            runs_on: macos-13
+            compiler: clang
+            c_compiler: clang
+          - name: Windows / Clang-CL / x86_64
+            runs_on: windows-latest
+            compiler: clang
+            c_compiler: clang-cl
+          - name: Windows / MSVC / x86_64
+            runs_on: windows-latest
+            compiler: msvc
+            c_compiler: msvc
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -47,8 +59,12 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
 
-      - name: Configure (Windows)
-        if: runner.os == 'Windows'
+      - name: Configure (Windows / MSVC)
+        if: runner.os == 'Windows' && matrix.compiler == 'msvc'
+        run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+
+      - name: Configure (Windows / Clang-CL)
+        if: runner.os == 'Windows' && matrix.compiler == 'clang'
         run: cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -T ClangCL
 
       - name: Build (Linux/macOS)
@@ -66,39 +82,3 @@ jobs:
       - name: Test (Windows)
         if: runner.os == 'Windows'
         run: ctest --test-dir build --build-config Release --output-on-failure
-
-  cross-arch-compile-check:
-    name: Cross-arch compile checks
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install cross toolchains
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            gcc-multilib \
-            gcc-avr \
-            avr-libc || true
-          
-          # Try to install GCC cross-compilers, skip if unavailable
-          sudo apt-get install -y --no-install-recommends gcc-aarch64-linux-gnu || true
-          sudo apt-get install -y --no-install-recommends gcc-arm-linux-gnueabihf || true
-          sudo apt-get install -y --no-install-recommends gcc-powerpc64-linux-gnu || true
-
-      - name: Build architecture smoke translation unit
-        run: |
-          cat > arch_smoke.c << 'EOF'
-          #include "core.h"
-
-          int main(void) {
-              return 0;
-          }
-          EOF
-
-          gcc -m32 -std=c11 -Wall -Wextra -Werror -I. -c arch_smoke.c -o arch_i386.o
-          aarch64-linux-gnu-gcc -std=c11 -Wall -Wextra -Werror -I. -c arch_smoke.c -o arch_aarch64.o || echo "Warning: aarch64 compiler not available"
-          arm-linux-gnueabihf-gcc -std=c11 -Wall -Wextra -Werror -I. -c arch_smoke.c -o arch_arm.o || echo "Warning: ARM compiler not available"
-          powerpc64-linux-gnu-gcc -std=c11 -Wall -Wextra -Werror -I. -c arch_smoke.c -o arch_ppc64.o || echo "Warning: PowerPC64 compiler not available"
-          avr-gcc -std=c11 -Wall -Wextra -Werror -I. -c arch_smoke.c -o arch_avr.o

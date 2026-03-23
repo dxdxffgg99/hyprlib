@@ -7,7 +7,7 @@
  * @param int_ptr arr
  * @param u_int n
 */
-static inline void Heap_sort(int *arr, unsigned int n);
+static inline void __attribute__((unused)) Heap_sort(int *arr, unsigned int n);
 
 /**
  * @brief Quick Sort
@@ -16,7 +16,7 @@ static inline void Heap_sort(int *arr, unsigned int n);
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void Quick_sort(int *arr, unsigned int n);
+static inline void __attribute__((unused)) Quick_sort(int *arr, unsigned int n);
 
 /**
  * @brief Merge Sort
@@ -25,7 +25,7 @@ static inline void Quick_sort(int *arr, unsigned int n);
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void Merge_sort(int *arr, unsigned int n);
+static inline void __attribute__((unused)) Merge_sort(int *arr, unsigned int n);
 
 /**
  * @brief Insertion Sort
@@ -34,7 +34,7 @@ static inline void Merge_sort(int *arr, unsigned int n);
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void Insertion_sort(int *arr, unsigned int n);
+static inline void __attribute__((unused)) Insertion_sort(int *arr, unsigned int n);
 
 /**
  * @brief Bubble Sort
@@ -43,7 +43,7 @@ static inline void Insertion_sort(int *arr, unsigned int n);
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void Bubble_sort(int *arr, unsigned int n);
+static inline void __attribute__((unused)) Bubble_sort(int *arr, unsigned int n);
 
 /**
  * @brief Selection Sort
@@ -53,7 +53,7 @@ static inline void Bubble_sort(int *arr, unsigned int n);
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void Selection_sort(int *arr, unsigned int n);
+static inline void __attribute__((unused)) Selection_sort(int *arr, unsigned int n);
 
 /**
  * @brief Shell Sort
@@ -62,7 +62,7 @@ static inline void Selection_sort(int *arr, unsigned int n);
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void Shell_sort(int *arr, unsigned int n);
+static inline void __attribute__((unused)) Shell_sort(int *arr, unsigned int n);
 
 /**
  * @brief Counting Sort
@@ -72,7 +72,7 @@ static inline void Shell_sort(int *arr, unsigned int n);
  * @param n Number of elements
  * @param max_val The maximum value present in the array
  */
-static inline void Counting_sort(int *arr, unsigned int n, int max_val);
+static inline void __attribute__((unused)) Counting_sort(int *arr, unsigned int n, int max_val);
 
 /**
  * @brief Radix Sort
@@ -81,5 +81,5 @@ static inline void Counting_sort(int *arr, unsigned int n, int max_val);
  * @param arr Pointer to the integer array
  * @param n Number of elements
  */
-static inline void Radix_sort(int *arr, unsigned int n);
+static inline void __attribute__((unused)) Radix_sort(int *arr, unsigned int n);
 #endif
