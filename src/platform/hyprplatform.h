@@ -15,7 +15,7 @@
     #define hypr_inline
 #endif
 
-#if ((defined(__STDC_VERSION__) && HYPR_C99) || defined(__GNUC__))
+#if ((defined(__STDC_VERSION__) && HYPR_C99) || HYPERLIB_COMPILER_GCC)
     #define hypr_restrict restrict
 #elif (HYPERLIB_COMPILER_MSVC)
     #define hypr_restrict __restrict
@@ -31,6 +31,14 @@
     #define hypr_unused(x) (void)(x)
 #else
     #define hypr_unused(x) (void)(__typeof__(x))(x)
+#endif
+
+#if HYPERLIB_COMPILER_GCC || HYPERLIB_COMPILER_CLANG
+#  define HYPR_UNUSED __attribute__((unused))
+#elif defined(_MSC_VER)
+#  define HYPR_UNUSED __pragma(warning(suppress: 4505))
+#else
+#  define HYPR_UNUSED
 #endif
 
 #endif

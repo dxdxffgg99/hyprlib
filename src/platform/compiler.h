@@ -15,12 +15,4 @@
     #define HYPERLIB_COMPILER_NAME "Unknown"
 #endif
 
-#if defined(__GNUC__) || defined(__clang__)
-    #define HYPR_UNUSED __attribute__((unused))
-#elif defined(_MSC_VER)
-    #define HYPR_UNUSED
-#else
-    #define HYPR_UNUSED
-#endif
-
 #endif

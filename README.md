@@ -87,22 +87,6 @@ Fast, inline floating-point math functions.
 | `Vec4_Add(out, a, b)` | Adds two `float[4]` vectors |
 | `Vec4_Dot(a, b)` | Dot product of two `float[4]` vectors |
 
-### Algorithm (`src/algorithm/`)
-
-Sorting functions operating on `int` arrays.
-
-| Function | Time Complexity | Notes |
-|---|---|---|
-| `Quick_sort(arr, n)` | O(n log n) avg | Best general-purpose sort for large data |
-| `Merge_sort(arr, n)` | O(n log n) | Stable; requires O(n) extra space |
-| `Heap_sort(arr, n)` | O(n log n) | In-place, not stable |
-| `Shell_sort(arr, n)` | O(n log² n) | Improved insertion sort |
-| `Insertion_sort(arr, n)` | O(n²) | Efficient for small (n < 16) or nearly sorted arrays |
-| `Counting_sort(arr, n, max_val)` | O(n + k) | Non-comparative; best when value range is small |
-| `Radix_sort(arr, n)` | O(nk) | Digit-by-digit sort |
-| `Selection_sort(arr, n)` | O(n²) | Minimizes swaps |
-| `Bubble_sort(arr, n)` | O(n²) | Educational use |
-
 ### Utilities (`core.h`)
 
 ```c

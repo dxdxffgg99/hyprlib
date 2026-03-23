@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(hyperlib C)
 
 add_library(hyperlib SHARED
-        src/algorithm/sort.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/core.c
 )
 
 set_target_properties(hyperlib PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
@@ -10,7 +10,6 @@ set_target_properties(hyperlib PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 target_include_directories(hyperlib PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/platform>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/algorithm>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/math>
 )
 
