@@ -2,14 +2,23 @@
 #define HYPER_LIBRARY_CORE_H
 
 #include "./src/algorithm/hypralgo.h"
+#include "./src/platform/compiler.h"
 #include "./src/platform/hyprplatform.h"
 #include "./src/math/math.h"
 
-#define swap(x, y) do { \
-    typeof(x) _t = (x); \
-    (x) = (y);          \
-    (y) = _t;           \
-} while (0)
+#if HYP
+    #define swap(x, y) do { \
+        typeof(x) _hypr_swap_tmp = (x); \
+        (x) = (y); \
+        (y) = _hypr_swap_tmp; \
+    } while (0)
+#else
+    #define swap(x, y) do { \
+        int _hypr_swap_tmp = (x); \
+        (x) = (y); \
+        (y) = _hypr_swap_tmp; \
+    } while (0)
+#endif
 
 static inline char *itoa(int num, char *str, int base) {
     int i = 0;
