@@ -31,10 +31,6 @@ jobs:
             runs_on: ubuntu-24.04-arm
             compiler: clang
             c_compiler: clang
-          - name: macOS 13 / Clang / x86_64
-            runs_on: macos-13
-            compiler: clang
-            c_compiler: clang
           - name: macOS 14 / Clang / aarch64
             runs_on: macos-14
             compiler: clang
