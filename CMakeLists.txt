@@ -23,7 +23,7 @@ endif()
 
 enable_testing()
 
-file(GLOB TEST_SOURCES "test/*.c")
+file(GLOB TEST_SOURCES "core.c")
 
 set(C_STANDARDS 90 99 11 17)
 if(NOT MSVC)
@@ -34,17 +34,17 @@ foreach(SOURCE_FILE ${TEST_SOURCES})
     get_filename_component(TEST_NAME_BASE ${SOURCE_FILE} NAME_WE)
 
     foreach(STD ${C_STANDARDS})
-        set(TARGET_NAME "test_${TEST_NAME_BASE}_c${STD}")
+        set(TARGET_NAME "${TEST_NAME_BASE}_c${STD}")
 
         add_executable(${TARGET_NAME} ${SOURCE_FILE}
-                test/test.c
                 src/alias/hypralias.h
                 src/platform/compiler.h
                 src/platform/cpu.h
                 src/platform/os.h
                 src/platform/cstdver.h
                 src/platform/types.h
-                src/platform/hyprplatform.h)
+                src/platform/hyprplatform.h
+                core.h)
 
         set_target_properties(${TARGET_NAME} PROPERTIES
                 C_STANDARD ${STD}

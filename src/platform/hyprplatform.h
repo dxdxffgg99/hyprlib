@@ -1,11 +1,11 @@
 #ifndef HYPERLIB_PLATFORM_H
 #define HYPERLIB_PLATFORM_H
 
-#include "compiler.h"
-#include "cpu.h"
-#include "cstdver.h"
-#include "os.h"
-#include "types.h"
+#include "./compiler.h"
+#include "./cpu.h"
+#include "./cstdver.h"
+#include "./os.h"
+#include "./types.h"
 
 #if (defined(__STDC_VERSION__) && HYPR_C99)
     #define hypr_inline inline
