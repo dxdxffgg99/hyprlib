@@ -54,4 +54,4 @@
     #define HYPERLIB_PLATFORM_WIN32 1
 #endif
 
-#endif // HYPERLIB_OS_H
+#endif
